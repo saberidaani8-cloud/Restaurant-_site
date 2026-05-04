@@ -218,3 +218,11 @@ if(data){
 </body>
 </html>
 <button onclick="window.location.href='admin.html'">Admin</button>
+<script>
+let data = JSON.parse(localStorage.getItem("item"));
+
+if(data){
+  document.getElementById("dynamicName").innerText = data.name;
+  document.getElementById("dynamicPrice").innerText = data.price + " MAD";
+}
+</script>
