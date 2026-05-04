@@ -1,26 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Panel</title>
+
+<style>
+body {
+  font-family: Arial;
+  background:#f5f5f5;
+  margin:0;
+  padding:20px;
+}
+
+.container {
+  max-width:400px;
+  margin:auto;
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+h2 {
+  text-align:center;
+}
+
+input {
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  border:1px solid #ddd;
+  border-radius:5px;
+}
+
+button {
+  width:100%;
+  padding:10px;
+  background:#e67e22;
+  color:white;
+  border:none;
+  border-radius:5px;
+  font-size:16px;
+}
+
+.preview {
+  background:#fafafa;
+  padding:10px;
+  margin-top:15px;
+  border-radius:5px;
+}
+</style>
 </head>
 
 <body>
 
-<h2>Update Menu Item</h2>
+<div class="container">
+  <h2>Admin Menu</h2>
 
-<input id="name" placeholder="Item name"><br><br>
-<input id="price" placeholder="Price"><br><br>
+  <input id="name" placeholder="Nom du produit">
+  <input id="price" placeholder="Prix (MAD)">
 
-<button onclick="save()">Save</button>
+  <button onclick="save()">Save Changes</button>
+
+  <div class="preview" id="preview">
+    Current item: none
+  </div>
+</div>
 
 <script>
+
+// Load existing data
+let existing = JSON.parse(localStorage.getItem("item"));
+if(existing){
+  document.getElementById("preview").innerText =
+    "Current: " + existing.name + " - " + existing.price + " MAD";
+}
+
+// Save new data
 function save(){
   let name = document.getElementById("name").value;
   let price = document.getElementById("price").value;
 
+  if(!name || !price){
+    alert("Fill all fields");
+    return;
+  }
+
   localStorage.setItem("item", JSON.stringify({name, price}));
 
-  alert("Saved! Go back to main site.");
+  alert("Saved successfully!");
+
+  document.getElementById("preview").innerText =
+    "Current: " + name + " - " + price + " MAD";
 }
 </script>
 
