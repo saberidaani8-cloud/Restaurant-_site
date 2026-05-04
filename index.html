@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,81 +7,178 @@
 
 <style>
 body {
-  font-family: Arial;
   margin:0;
-  background:#fffaf5;
+  font-family: 'Segoe UI', sans-serif;
+  background:#fff;
 }
 
-header {
-  background:#7a3e1d;
+/* HERO */
+.hero {
+  height:320px;
+  background:url('https://images.unsplash.com/photo-1555992336-03a23c6f6c2c') center/cover;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   color:white;
-  padding:15px;
   text-align:center;
 }
 
+.hero::after {
+  content:'';
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+}
+
+.hero h1 {
+  position:relative;
+  font-size:28px;
+}
+
+.hero p {
+  position:relative;
+  opacity:0.8;
+}
+
+/* MENU */
 .menu {
   padding:20px;
 }
 
-.item {
+.menu h2 {
+  margin-bottom:10px;
+}
+
+.grid {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:15px;
+}
+
+.card {
+  display:flex;
   background:white;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card img {
+  width:120px;
+  height:100%;
+  object-fit:cover;
+}
+
+.card-content {
   padding:10px;
-  margin:10px 0;
-  border-radius:10px;
-  box-shadow:0 2px 5px rgba(0,0,0,0.1);
+  flex:1;
+}
+
+.card-content h3 {
+  margin:0;
+}
+
+.price {
+  color:#e67e22;
+  font-weight:bold;
 }
 
 button {
-  background:#ff7a00;
-  color:white;
+  background:#e67e22;
   border:none;
-  padding:8px;
+  color:white;
+  padding:6px;
   width:100%;
+  border-radius:6px;
 }
 
+/* CART */
 .cart {
   position:fixed;
   bottom:0;
   width:100%;
-  background:#222;
+  background:#111;
   color:white;
   padding:10px;
+  text-align:center;
+}
+
+/* CONTACT */
+.contact {
+  padding:20px;
+  font-size:14px;
+  color:#555;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Michwat Alakhawayn ⭐ 3.9</h1>
-</header>
-
-<section class="menu">
-
-  <h2>Menu</h2>
-
-  <!-- 🔥 Editable item -->
-  <div class="item">
-    <h3 id="dynamicName">Chicken</h3>
-    <p id="dynamicPrice">50 MAD</p>
-    <button onclick="add()">Ajouter</button>
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <h1>Michwat Alakhawayn ⭐ 3.9</h1>
+    <p>Grillades marocaines • Témara</p>
   </div>
-
 </section>
 
+<!-- MENU -->
+<section class="menu">
+  <h2>Menu</h2>
+
+  <div class="grid">
+
+    <!-- Editable item -->
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1604908176997-4310c2cbb2c6">
+      <div class="card-content">
+        <h3 id="dynamicName">Poulet grillé</h3>
+        <p id="dynamicPrice" class="price">55 MAD</p>
+        <button onclick="add()">Ajouter</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1604909053141-7a6a1f0e6a1e">
+      <div class="card-content">
+        <h3>Poulet entier</h3>
+        <p class="price">110 MAD</p>
+        <button onclick="addFixed('Poulet entier',110)">Ajouter</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1604908812759-6f0c1b6c64d0">
+      <div class="card-content">
+        <h3>Côtelettes</h3>
+        <p class="price">120 MAD</p>
+        <button onclick="addFixed('Côtelettes',120)">Ajouter</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact">
+  📍 Bd Omar Ibn Al Khattab, Témara<br>
+  📞 05 37 60 74 68<br>
+  🕐 Open until 01:00
+</section>
+
+<!-- CART -->
 <div class="cart" id="cart">
   Total: 0 MAD
   <button onclick="order()">Commander</button>
 </div>
 
-<!-- Admin button -->
-<button onclick="window.location.href='admin.html'">Admin</button>
-
 <script>
 let total = 0;
 let items = [];
 
-// Add to cart
+// dynamic item
 function add(){
   let name = document.getElementById("dynamicName").innerText;
   let price = parseInt(document.getElementById("dynamicPrice").innerText);
@@ -89,17 +186,27 @@ function add(){
   total += price;
   items.push(name);
 
+  updateCart();
+}
+
+// fixed items
+function addFixed(name, price){
+  total += price;
+  items.push(name);
+  updateCart();
+}
+
+function updateCart(){
   document.getElementById("cart").innerHTML =
     "Total: " + total + " MAD <button onclick='order()'>Commander</button>";
 }
 
-// Order via WhatsApp
 function order(){
-  let message = "Commande:%0A" + items.join("%0A") + "%0ATotal: " + total;
-  window.open("https://wa.me/212661600799?text=" + message);
+  let msg = "Commande:%0A" + items.join("%0A") + "%0ATotal: " + total;
+  window.open("https://wa.me/212661600799?text=" + msg);
 }
 
-// 🔥 LOAD ADMIN DATA
+// ADMIN DATA LOAD
 let data = JSON.parse(localStorage.getItem("item"));
 
 if(data){
