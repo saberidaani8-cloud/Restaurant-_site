@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michwat Alakhawayn</title>
+
+<style>
+body {
+  margin:0;
+  font-family:Arial;
+  background:#fffaf3;
+}
+
+/* HEADER */
+header {
+  background:#7a3e1d;
+  color:white;
+  padding:15px;
+  text-align:center;
+}
+
+/* HERO */
+.hero {
+  background:url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092') center/cover;
+  color:white;
+  text-align:center;
+  padding:60px 20px;
+}
+
+.btn {
+  background:#ff7a00;
+  color:white;
+  padding:12px 20px;
+  border:none;
+  margin:5px;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+/* MENU */
+.menu {
+  padding:20px;
+}
+
+.item {
+  background:white;
+  margin:10px 0;
+  padding:15px;
+  border-radius:10px;
+  box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* CART */
+.cart {
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#222;
+  color:white;
+  padding:10px;
+}
+
+/* CONTACT */
+.contact {
+  padding:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Michwat Alakhawayn</h1>
+  <p>⭐ 3.9 (456 avis)</p>
+</header>
+
+<section class="hero">
+  <h2>Grillades Marocaines Authentiques</h2>
+  <button class="btn" onclick="scrollMenu()">Voir Menu</button>
+</section>
+
+<section class="menu" id="menu">
+  <h2>Poulet</h2>
+
+  <div class="item">
+    <h3>1/4 Poulet</h3>
+    <p>28 MAD</p>
+    <button onclick="add('1/4 Poulet',28)">Ajouter</button>
+  </div>
+
+  <div class="item">
+    <h3>1/2 Poulet</h3>
+    <p>55 MAD</p>
+    <button onclick="add('1/2 Poulet',55)">Ajouter</button>
+  </div>
+
+  <div class="item">
+    <h3>Poulet entier</h3>
+    <p>110 MAD</p>
+    <button onclick="add('Poulet entier',110)">Ajouter</button>
+  </div>
+
+  <h2>Grillades</h2>
+
+  <div class="item">
+    <h3>Côtelettes d’agneau</h3>
+    <p>120 MAD</p>
+    <button onclick="add('Côtelettes',120)">Ajouter</button>
+  </div>
+</section>
+
+<section class="contact">
+  <h2>Contact</h2>
+  <p>📍 Bd Omar Ibn Al Khattab, Témara</p>
+  <p>📞 05 37 60 74 68</p>
+
+  <iframe 
+  src="https://maps.google.com/maps?q=temara&t=&z=13&ie=UTF8&iwloc=&output=embed"
+  width="100%" height="200"></iframe>
+</section>
+
+<div class="cart" id="cart">
+  Total: 0 MAD
+  <button class="btn" onclick="order()">Commander</button>
+</div>
+
+<script>
+let total = 0;
+let items = [];
+
+function add(name, price){
+  total += price;
+  items.push(name);
+  document.getElementById("cart").innerHTML =
+    "Total: " + total + " MAD <button class='btn' onclick='order()'>Commander</button>";
+}
+
+function order(){
+  let message = "Commande:%0A" + items.join("%0A") + "%0ATotal: " + total + " MAD";
+  window.open("https://wa.me/212661600799?text=" + message);
+}
+
+function scrollMenu(){
+  document.getElementById("menu").scrollIntoView();
+}
+</script>
+
+</body>
+</html>
